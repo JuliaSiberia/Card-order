@@ -1,0 +1,1 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/5x9gxrjylv8t9tic?svg=true)](https://ci.appveyor.com/project/JuliaSiberia/card-order)
