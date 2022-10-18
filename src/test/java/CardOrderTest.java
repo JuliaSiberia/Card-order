@@ -11,11 +11,30 @@ public class CardOrderTest {
     @Test
     void shouldSubmitRequest() {
         open("http://localhost:9999");
-        SelenideElement form = $("[id=root]");
-        form.$("[data-test-id=name] input").setValue("Кульпина Юлия");
-        form.$("[data-test-id=phone] input").setValue("+98765432101");
-        form.$("[data-test-id=agreement]").click();
-        form.$("[type=button").click();
-        form.$("[data-test-id=order-success]").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
+        $("[data-test-id=name] input").setValue("Кульпина Юлия");
+        $("[data-test-id=phone] input").setValue("+98765432101");
+        $("[data-test-id=agreement]").click();
+        $("[type=button").click();
+        $("[data-test-id=order-success]").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
+    }
+
+    @Test
+    void enteringInvalidNameValues() {
+        open("http://localhost:9999");
+        $("[data-test-id=name] input").setValue("Kulpina Yuliya");
+        $("[data-test-id=phone] input").setValue("+98765432101");
+        $("[data-test-id=agreement]").click();
+        $("[type=button").click();
+        $("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+    }
+
+    @Test
+    void invalidInputPhone() {
+        open("http://localhost:9999");
+        $("[data-test-id=name] input").setValue("Кульпина Юлия");
+        $("[data-test-id=phone] input").setValue("+987654321");
+        $("[data-test-id=agreement]").click();
+        $("[type=button").click();
+        $("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 }
